@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PageDigest Side Panel</title>
+  <link rel="stylesheet" href="sidepanel.css">
+  <script src="marked.min.js"></script>
+</head>
+<body>
+  <div class="sidepanel-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <svg class="logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="title">PageDigest</span>
+      </div>
+      <div class="header-actions">
+        <button id="mode-toggle" class="mode-btn" title="Switch to Q&A mode">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </button>
+        <button id="settings-btn" class="icon-btn" title="Settings">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mode: Summary -->
+    <div id="summary-mode" class="mode-content">
+      <div class="quick-actions">
+        <button class="action-btn" data-action="summarize">
+          <span class="action-icon">✨</span>
+          <span>Summarize</span>
+        </button>
+        <button class="action-btn" data-action="extract">
+          <span class="action-icon">📊</span>
+          <span>Extract</span>
+        </button>
+        <button class="action-btn" data-action="keypoints">
+          <span class="action-icon">📝</span>
+          <span>Points</span>
+        </button>
+        <button class="action-btn" data-action="translate">
+          <span class="action-icon">🌐</span>
+          <span>Translate</span>
+        </button>
+      </div>
+
+      <div class="custom-input">
+        <textarea id="custom-prompt" placeholder="Custom prompt..."></textarea>
+        <button id="run-custom" class="btn-primary">Run</button>
+      </div>
+    </div>
+
+    <!-- Mode: Q&A -->
+    <div id="qa-mode" class="mode-content hidden">
+      <div class="qa-container">
+        <div id="qa-messages" class="qa-messages">
+          <div class="welcome-message">
+            <p>💬 Ask me anything about this page</p>
+          </div>
+        </div>
+        <div class="qa-input-area">
+          <textarea id="qa-input" placeholder="Ask a question..." rows="2"></textarea>
+          <button id="qa-send" class="btn-primary">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div id="loading" class="loading hidden">
+      <div class="spinner"></div>
+      <p>Processing...</p>
+    </div>
+
+    <!-- Result -->
+    <div id="result-section" class="result-section hidden">
+      <div class="result-header">
+        <div class="result-meta">
+          <span id="result-time"></span>
+        </div>
+        <div class="result-actions">
+          <button id="copy-btn" class="icon-btn" title="Copy">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="result-content" class="result-content"></div>
+    </div>
+
+    <!-- Shortcuts hint -->
+    <div class="shortcuts-hint">
+      <div class="shortcut-item">
+        <kbd>Alt+S</kbd> Summarize
+      </div>
+      <div class="shortcut-item">
+        <kbd>Alt+Q</kbd> Q&A
+      </div>
+      <div class="shortcut-item">
+        <kbd>Alt+T</kbd> Translate
+      </div>
+    </div>
+  </div>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>

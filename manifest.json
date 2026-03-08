@@ -1,12 +1,14 @@
 {
   "manifest_version": 3,
   "name": "PageDigest - AI网页摘要助手",
-  "version": "1.0.0",
-  "description": "一键总结网页内容，支持自定义AI提示词，由Google Gemini驱动",
+  "version": "2.0.0",
+  "description": "一键总结网页内容，支持侧边栏、智能问答、快捷键，由Google Gemini驱动",
   "permissions": [
     "activeTab",
     "storage",
-    "scripting"
+    "scripting",
+    "sidePanel",
+    "contextMenus"
   ],
   "host_permissions": [
     "https://generativelanguage.googleapis.com/*"
@@ -19,16 +21,46 @@
       "128": "icons/icon128.svg"
     }
   },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"],
+      "js": ["marked.min.js", "content.js"],
+      "css": ["content.css"],
       "run_at": "document_idle"
     }
   ],
+  "commands": {
+    "summarize": {
+      "suggested_key": {
+        "default": "Alt+S"
+      },
+      "description": "Quick summarize"
+    },
+    "open-qa": {
+      "suggested_key": {
+        "default": "Alt+Q"
+      },
+      "description": "Open Q&A mode"
+    },
+    "translate": {
+      "suggested_key": {
+        "default": "Alt+T"
+      },
+      "description": "Translate page"
+    },
+    "toggle-sidepanel": {
+      "suggested_key": {
+        "default": "Alt+D"
+      },
+      "description": "Toggle side panel"
+    }
+  },
   "icons": {
     "16": "icons/icon16.svg",
     "48": "icons/icon48.svg",
