@@ -34,6 +34,49 @@
       </div>
     </div>
 
+    <!-- Settings Mode -->
+    <div id="settings-mode" class="mode-content hidden">
+      <div class="settings-container">
+        <div class="settings-header">
+          <h2>Settings</h2>
+          <button id="close-settings" class="icon-btn">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="settings-content">
+          <div class="input-group">
+            <label for="api-key-input">Gemini API Key</label>
+            <div class="input-with-icon">
+              <input 
+                type="password" 
+                id="api-key-input" 
+                placeholder="Enter your API key"
+                autocomplete="off"
+              >
+              <button id="toggle-key-visibility" class="input-icon-btn" type="button">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+            <p class="input-hint">
+              Get your free API key at 
+              <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>
+            </p>
+          </div>
+
+          <button id="save-key-btn" class="btn-primary">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Mode: Summary -->
     <div id="summary-mode" class="mode-content">
       <div class="quick-actions">

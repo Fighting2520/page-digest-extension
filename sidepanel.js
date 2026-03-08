@@ -13,7 +13,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   const modeToggle = document.getElementById('mode-toggle');
   const summaryMode = document.getElementById('summary-mode');
   const qaMode = document.getElementById('qa-mode');
+  const settingsMode = document.getElementById('settings-mode');
   const settingsBtn = document.getElementById('settings-btn');
+  const closeSettings = document.getElementById('close-settings');
+  
+  const apiKeyInput = document.getElementById('api-key-input');
+  const toggleKeyVisibility = document.getElementById('toggle-key-visibility');
+  const saveKeyBtn = document.getElementById('save-key-btn');
   
   const actionBtns = document.querySelectorAll('.action-btn');
   const customPrompt = document.getElementById('custom-prompt');
@@ -29,12 +35,62 @@ document.addEventListener('DOMContentLoaded', async () => {
   const resultTime = document.getElementById('result-time');
   const copyBtn = document.getElementById('copy-btn');
 
-  let currentMode = 'summary'; // 'summary' or 'qa'
+  let currentMode = 'summary'; // 'summary', 'qa', or 'settings'
   let qaContext = []; // Q&A 对话历史
   let pageContent = ''; // 缓存的网页内容
 
+  // 设置按钮 - 显示设置界面
+  settingsBtn.addEventListener('click', async () => {
+    summaryMode.classList.add('hidden');
+    qaMode.classList.add('hidden');
+    settingsMode.classList.remove('hidden');
+    currentMode = 'settings';
+    
+    // 加载已保存的 API Key
+    const { apiKey } = await chrome.storage.local.get('apiKey');
+    if (apiKey) {
+      apiKeyInput.value = apiKey;
+    }
+  });
+
+  // 关闭设置
+  closeSettings.addEventListener('click', () => {
+    settingsMode.classList.add('hidden');
+    summaryMode.classList.remove('hidden');
+    currentMode = 'summary';
+  });
+
+  // 显示/隐藏 API Key
+  let keyVisible = false;
+  toggleKeyVisibility.addEventListener('click', (e) => {
+    e.preventDefault();
+    keyVisible = !keyVisible;
+    apiKeyInput.type = keyVisible ? 'text' : 'password';
+  });
+
+  // 保存 API Key
+  saveKeyBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    
+    const key = apiKeyInput.value.trim();
+    if (!key) {
+      alert('Please enter a valid API Key');
+      return;
+    }
+
+    try {
+      await chrome.storage.local.set({ apiKey: key });
+      alert('API Key saved successfully!');
+      closeSettings.click();
+    } catch (error) {
+      alert('Failed to save API Key: ' + error.message);
+    }
+  });
+
   // 模式切换
   modeToggle.addEventListener('click', () => {
+    if (currentMode === 'settings') return; // 设置模式下不切换
+    
     if (currentMode === 'summary') {
       currentMode = 'qa';
       summaryMode.classList.add('hidden');
@@ -114,16 +170,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     setTimeout(() => {
       copyBtn.innerHTML = originalHTML;
     }, 2000);
-  });
-
-  // 设置按钮 - 打开设置页面
-  settingsBtn.addEventListener('click', () => {
-    chrome.windows.create({
-      url: 'settings.html',
-      type: 'popup',
-      width: 440,
-      height: 400
-    });
   });
 
   // 处理翻译
