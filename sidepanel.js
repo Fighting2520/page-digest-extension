@@ -116,9 +116,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, 2000);
   });
 
-  // 设置按钮
+  // 设置按钮 - 打开设置弹窗
   settingsBtn.addEventListener('click', () => {
-    chrome.runtime.openOptionsPage();
+    chrome.windows.create({
+      url: 'popup.html',
+      type: 'popup',
+      width: 440,
+      height: 600
+    });
   });
 
   // 处理翻译
