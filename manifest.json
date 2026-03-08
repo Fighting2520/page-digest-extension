@@ -14,12 +14,7 @@
     "https://generativelanguage.googleapis.com/*"
   ],
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "icons/icon16.svg",
-      "48": "icons/icon48.svg",
-      "128": "icons/icon128.svg"
-    }
+    "default_title": "PageDigest - Click to open side panel"
   },
   "side_panel": {
     "default_path": "sidepanel.html"
