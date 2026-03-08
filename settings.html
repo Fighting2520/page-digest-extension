@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PageDigest Settings</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Setup Section -->
+    <div id="setup-section">
+      <div class="setup-header">
+        <svg class="setup-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1>PageDigest Settings</h1>
+        <p>Configure your Gemini API key</p>
+      </div>
+
+      <div class="setup-content">
+        <div class="input-group">
+          <label for="api-key-input">Gemini API Key</label>
+          <div class="input-with-icon">
+            <input 
+              type="password" 
+              id="api-key-input" 
+              placeholder="Enter your API key"
+              autocomplete="off"
+            >
+            <button id="toggle-key-visibility" class="input-icon-btn" type="button">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+          <p class="input-hint">
+            Get your free API key at 
+            <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>
+          </p>
+        </div>
+
+        <button id="save-key-btn" class="btn-primary">
+          Save & Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="settings.js"></script>
+</body>
+</html>

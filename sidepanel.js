@@ -116,13 +116,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, 2000);
   });
 
-  // 设置按钮 - 打开设置弹窗
+  // 设置按钮 - 打开设置页面
   settingsBtn.addEventListener('click', () => {
     chrome.windows.create({
-      url: 'popup.html',
+      url: 'settings.html',
       type: 'popup',
       width: 440,
-      height: 600
+      height: 400
     });
   });
 
