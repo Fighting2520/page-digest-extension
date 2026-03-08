@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PageDigest</title>
+  <link rel="stylesheet" href="popup.css">
+  <script src="marked.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- 设置页面 -->
+    <div id="setup-section" class="section">
+      <div class="setup-content">
+        <div class="brand">
+          <svg class="brand-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h1 class="brand-name">PageDigest</h1>
+        </div>
+        
+        <p class="setup-desc">AI-powered web page summarization</p>
+        
+        <div class="setup-form">
+          <label class="input-label">Gemini API Key</label>
+          <div class="input-wrapper">
+            <input type="password" id="api-key-input" placeholder="Paste your API key here" class="input-field">
+            <button id="toggle-key-visibility" class="input-action" title="Toggle visibility">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+          <button id="save-key-btn" class="btn-primary">Get Started</button>
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" class="setup-link">
+            Get free API key →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主界面 -->
+    <div id="main-section" class="section hidden">
+      <div class="toolbar">
+        <div class="toolbar-brand">
+          <svg class="toolbar-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <button id="settings-btn" class="toolbar-btn" title="Settings">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="content">
+        <!-- 快速操作 -->
+        <div class="actions">
+          <button class="action-card" data-prompt="Summarize the core content and main points of this webpage in 3-5 sentences." data-lang-detect="true">
+            <div class="action-icon">✨</div>
+            <div class="action-label">Summarize</div>
+          </button>
+          <button class="action-card" data-prompt="Extract all key data, statistics, and important facts from this webpage." data-lang-detect="true">
+            <div class="action-icon">📊</div>
+            <div class="action-label">Extract Data</div>
+          </button>
+          <button class="action-card" data-prompt="List the core points of this webpage in concise bullet points." data-lang-detect="true">
+            <div class="action-icon">📝</div>
+            <div class="action-label">Key Points</div>
+          </button>
+          <button class="action-card translate-btn" data-prompt-template="translate">
+            <div class="action-icon">🌐</div>
+            <div class="action-label">Translate</div>
+          </button>
+        </div>
+
+        <!-- 自定义提示 -->
+        <div class="custom-section">
+          <button id="custom-toggle" class="section-toggle">
+            <span>Custom Prompt</span>
+            <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div id="custom-prompt-area" class="custom-area hidden">
+            <textarea id="custom-prompt" placeholder="Enter your custom prompt..."></textarea>
+            <button id="run-custom-btn" class="btn-secondary">Run</button>
+          </div>
+        </div>
+
+        <!-- 加载状态 -->
+        <div id="loading" class="loading hidden">
+          <div class="loading-spinner"></div>
+          <p class="loading-text">Analyzing...</p>
+        </div>
+
+        <!-- 结果展示 -->
+        <div id="result-section" class="result-section hidden">
+          <div class="result-header">
+            <div class="result-meta">
+              <span id="word-count" class="meta-item"></span>
+              <span class="meta-divider">·</span>
+              <span id="result-time" class="meta-item"></span>
+            </div>
+            <div class="result-actions">
+              <button id="copy-btn" class="action-btn" title="Copy">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div id="result-content" class="result-content"></div>
+        </div>
+
+        <!-- 历史记录 -->
+        <div class="history-section">
+          <button id="history-toggle" class="section-toggle">
+            <span>History</span>
+            <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div id="history-list" class="history-list hidden"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
