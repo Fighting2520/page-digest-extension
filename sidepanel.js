@@ -39,6 +39,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   let qaContext = []; // Q&A 对话历史
   let pageContent = ''; // 缓存的网页内容
 
+  // 检查 API Key，首次加载时自动显示设置
+  const { apiKey } = await chrome.storage.local.get('apiKey');
+  if (!apiKey) {
+    summaryMode.classList.add('hidden');
+    settingsMode.classList.remove('hidden');
+    currentMode = 'settings';
+  }
+
   // 设置按钮 - 显示设置界面
   settingsBtn.addEventListener('click', async () => {
     summaryMode.classList.add('hidden');
