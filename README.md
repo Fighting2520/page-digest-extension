@@ -1,117 +1,184 @@
-# PageDigest
+# QuickRead AI
 
-AI-powered web page summarization Chrome extension.
+🚀 **AI-powered web page summarization Chrome extension**
 
-## Features
+Transform any webpage into concise, actionable insights with one click. Powered by Google Gemini AI.
 
-- ✨ **Smart Summarization** - One-click webpage summarization powered by Google Gemini
-- 📊 **Data Extraction** - Extract key data, statistics, and facts
-- 📝 **Key Points** - Generate concise bullet-point summaries
-- 🌐 **Smart Translation** - Auto-detect language and translate (EN↔️CN)
-- 📚 **History** - Save and revisit your recent summaries
-- 🎨 **Modern UI** - Clean, professional interface inspired by Notion and Linear
-- 📄 **Markdown Support** - Beautiful rendering of formatted content
+---
 
-## Installation
+## ✨ Features
 
-### From Source
+- **📝 Smart Summarization** - Get instant, intelligent summaries of any webpage
+- **📊 Data Extraction** - Automatically extract key statistics, facts, and figures
+- **🎯 Key Points** - Generate bullet-point highlights for quick scanning
+- **🌐 Smart Translation** - Auto-detect language and translate (EN ↔️ CN)
+- **📚 History** - Save and revisit your recent summaries
+- **⚡ Keyboard Shortcuts** - Work faster with customizable hotkeys
+- **🎨 Modern UI** - Clean, professional interface inspired by Notion and Linear
+- **📄 Markdown Support** - Beautiful rendering of formatted content
+- **🔒 Privacy First** - All data stays local, no tracking
 
-1. Clone this repository:
+---
+
+## 🚀 Installation
+
+### Option 1: Chrome Web Store (Coming Soon)
+
+We're preparing for official release on Chrome Web Store. Stay tuned!
+
+### Option 2: Install from Source
+
+1. **Download the extension**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/page-digest-extension.git
+   git clone https://github.com/Fighting2520/page-digest-extension.git
    ```
 
-2. Get a free Gemini API Key:
-   - Visit https://aistudio.google.com/app/apikey
-   - Create an API key (free tier available)
+2. **Get a free Gemini API Key**
+   - Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
+   - Sign in with your Google account
+   - Click "Create API Key" (free tier available)
+   - Copy the generated key
 
-3. Load the extension in Chrome:
-   - Open `chrome://extensions/`
-   - Enable "Developer mode"
+3. **Load the extension in Chrome**
+   - Open `chrome://extensions/` in Chrome
+   - Enable "Developer mode" (toggle in top-right corner)
    - Click "Load unpacked"
    - Select the `page-digest-extension` folder
 
-4. Configure your API key:
-   - Click the PageDigest icon in your toolbar
+4. **Configure your API key**
+   - Click the QuickRead AI icon in your toolbar
    - Paste your Gemini API key
-   - Click "Get Started"
+   - Click "Save & Get Started"
 
-## Usage
+---
+
+## 📖 Usage
 
 ### Quick Actions
 
-- **Summarize** - Get a concise summary of the current webpage
-- **Extract Data** - Pull out all statistics and key facts
-- **Key Points** - Generate bullet-point highlights
-- **Translate** - Auto-translate based on page language
+Click the QuickRead AI icon and choose:
+
+- **📝 Summarize** - Get a concise summary of the current webpage
+- **📊 Extract Data** - Pull out all statistics and key facts
+- **🎯 Key Points** - Generate bullet-point highlights
+- **🌐 Translate** - Auto-translate based on page language
 
 ### Custom Prompts
 
-Click "Custom Prompt" to enter your own instructions for the AI.
+Click "✨ Custom Prompt" to enter your own instructions:
+- "Explain this article to a 10-year-old"
+- "List all the action items mentioned"
+- "What are the main arguments for and against?"
+
+### Keyboard Shortcuts
+
+- `Alt+S` - Quick summarize
+- `Alt+Q` - Open Q&A mode
+- `Alt+T` - Translate page
+- `Alt+D` - Toggle side panel
+
+*Shortcuts can be customized in `chrome://extensions/shortcuts`*
 
 ### History
 
-Access your recent summaries by clicking "History" at the bottom.
+Access your recent summaries by clicking "📚 History" at the bottom of the panel.
 
-## Technology Stack
+---
+
+## 🛠️ Technology Stack
 
 - **Manifest V3** - Latest Chrome extension standard
-- **Vanilla JavaScript** - No framework dependencies
-- **Google Gemini 2.5 Flash** - Fast, powerful AI model
+- **Vanilla JavaScript** - No framework dependencies, fast and lightweight
+- **Google Gemini 2.5 Flash** - State-of-the-art AI model
 - **Marked.js** - Markdown rendering
 - **Modern CSS** - Clean, responsive design
 
-## Privacy
+---
 
-- All processing happens via Google Gemini API
-- Your API key is stored locally in Chrome storage
-- No data is sent to third-party servers
-- History is stored locally on your device
+## 🔒 Privacy & Security
 
-## Development
+**Your privacy is our priority.**
 
-### Project Structure
+- ✅ **No data collection** - We don't collect, store, or transmit any personal data
+- ✅ **Local storage only** - Your API key and history stay on your device
+- ✅ **Direct API calls** - Content is sent directly to Google Gemini API
+- ✅ **Open source** - Full transparency, audit the code yourself
+
+Read our full [Privacy Policy](./PRIVACY.md)
+
+---
+
+## 📁 Project Structure
 
 ```
 page-digest-extension/
 ├── manifest.json       # Extension configuration
-├── popup.html          # Main UI
-├── popup.css           # Styles
-├── popup.js            # Core logic
+├── popup.html          # Popup UI
+├── popup.css           # Popup styles
+├── popup.js            # Popup logic
+├── sidepanel.html      # Side panel UI
+├── sidepanel.css       # Side panel styles
+├── sidepanel.js        # Side panel logic
 ├── background.js       # Background service worker
 ├── content.js          # Content script
+├── settings.html       # Settings page
+├── settings.js         # Settings logic
 ├── marked.min.js       # Markdown parser
-└── icons/              # Extension icons
+├── icons/              # Extension icons
+├── PRIVACY.md          # Privacy policy
+└── README.md           # This file
 ```
-
-### Local Testing
-
-1. Make changes to the code
-2. Go to `chrome://extensions/`
-3. Click the refresh icon on PageDigest
-4. Test your changes
-
-## Roadmap
-
-- [ ] Side panel mode
-- [ ] Export to Markdown/PDF
-- [ ] Keyboard shortcuts
-- [ ] Multi-language UI
-- [ ] Custom prompt templates
-- [ ] Cloud sync (optional)
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-MIT License - see LICENSE file for details
-
-## Support
-
-If you encounter any issues or have suggestions, please open an issue on GitHub.
 
 ---
 
-**Made with ❤️ using Google Gemini AI**
+## 🗺️ Roadmap
+
+- [x] Core summarization features
+- [x] Side panel mode
+- [x] Keyboard shortcuts
+- [x] History tracking
+- [ ] Export to Markdown/PDF
+- [ ] Multi-language UI
+- [ ] Custom prompt templates
+- [ ] Cloud sync (optional)
+- [ ] Browser action context menu
+- [ ] Batch processing
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how you can help:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+MIT License - see [LICENSE](./LICENSE) file for details
+
+---
+
+## 💬 Support
+
+- **Issues**: [GitHub Issues](https://github.com/Fighting2520/page-digest-extension/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Fighting2520/page-digest-extension/discussions)
+
+---
+
+## 🙏 Acknowledgments
+
+- Powered by [Google Gemini AI](https://ai.google.dev/)
+- Markdown rendering by [Marked.js](https://marked.js.org/)
+- Inspired by modern design systems like Notion and Linear
+
+---
+
+**Made with ❤️ by developers, for developers**
+
+⭐ If you find QuickRead AI useful, please star the repo!

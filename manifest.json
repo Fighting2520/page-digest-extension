@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "PageDigest - AI网页摘要助手",
+  "name": "QuickRead AI - Smart Web Summarizer",
   "version": "2.0.0",
-  "description": "一键总结网页内容，支持侧边栏、智能问答、快捷键，由Google Gemini驱动",
+  "description": "AI-powered webpage summarization with one click. Extract key insights, translate, and save summaries. Powered by Google Gemini.",
   "permissions": [
     "activeTab",
     "storage",
@@ -14,7 +14,7 @@
     "https://generativelanguage.googleapis.com/*"
   ],
   "action": {
-    "default_title": "PageDigest - Click to open side panel"
+    "default_title": "QuickRead AI - Click to open side panel"
   },
   "side_panel": {
     "default_path": "sidepanel.html"

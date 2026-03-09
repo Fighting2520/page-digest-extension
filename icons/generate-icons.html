@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickRead AI - Icon Generator</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    .container {
+      background: white;
+      color: #1a202c;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    h1 {
+      margin-top: 0;
+      color: #667eea;
+    }
+    .preview {
+      display: flex;
+      gap: 20px;
+      margin: 30px 0;
+      align-items: center;
+    }
+    canvas {
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+    }
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: translateY(-2px);
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    .status {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f0fdf4;
+      border-left: 4px solid #10b981;
+      border-radius: 4px;
+      display: none;
+    }
+    .status.show {
+      display: block;
+    }
+    .instructions {
+      background: #f8fafc;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .instructions ol {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+    .instructions li {
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 QuickRead AI Icon Generator</h1>
+    <p>Generate PNG icons for the Chrome extension in three sizes: 16x16, 48x48, and 128x128.</p>
+    
+    <div class="preview" id="preview"></div>
+    
+    <button onclick="generateIcons()">Generate & Download Icons</button>
+    
+    <div class="status" id="status">
+      ✅ Icons generated successfully! Check your Downloads folder.
+    </div>
+    
+    <div class="instructions">
+      <h3>📝 Instructions</h3>
+      <ol>
+        <li>Click the "Generate & Download Icons" button above</li>
+        <li>Three PNG files will download automatically:
+          <ul>
+            <li><code>icon16.png</code></li>
+            <li><code>icon48.png</code></li>
+            <li><code>icon128.png</code></li>
+          </ul>
+        </li>
+        <li>Move these files to the <code>icons/</code> folder in your extension directory</li>
+        <li>Replace the existing SVG references in <code>manifest.json</code> if needed</li>
+      </ol>
+    </div>
+  </div>
+
+  <script>
+    const sizes = [16, 48, 128];
+    const colors = {
+      start: '#667eea',
+      end: '#764ba2'
+    };
+
+    function createIcon(size) {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+
+      // Create gradient background
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, colors.start);
+      gradient.addColorStop(1, colors.end);
+
+      // Draw rounded rectangle
+      const radius = size / 5.3;
+      ctx.beginPath();
+      ctx.moveTo(radius, 0);
+      ctx.lineTo(size - radius, 0);
+      ctx.quadraticCurveTo(size, 0, size, radius);
+      ctx.lineTo(size, size - radius);
+      ctx.quadraticCurveTo(size, size, size - radius, size);
+      ctx.lineTo(radius, size);
+      ctx.quadraticCurveTo(0, size, 0, size - radius);
+      ctx.lineTo(0, radius);
+      ctx.quadraticCurveTo(0, 0, radius, 0);
+      ctx.closePath();
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      // Draw document icon
+      ctx.fillStyle = 'white';
+      const iconSize = size * 0.5;
+      const iconX = (size - iconSize) / 2;
+      const iconY = (size - iconSize) / 2;
+      
+      // Document shape
+      const docWidth = iconSize * 0.6;
+      const docHeight = iconSize * 0.8;
+      const docX = iconX + (iconSize - docWidth) / 2;
+      const docY = iconY + (iconSize - docHeight) / 2;
+      const cornerSize = docWidth * 0.15;
+      
+      ctx.beginPath();
+      ctx.moveTo(docX, docY);
+      ctx.lineTo(docX + docWidth - cornerSize, docY);
+      ctx.lineTo(docX + docWidth, docY + cornerSize);
+      ctx.lineTo(docX + docWidth, docY + docHeight);
+      ctx.lineTo(docX, docY + docHeight);
+      ctx.closePath();
+      ctx.fill();
+      
+      // Folded corner
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+      ctx.beginPath();
+      ctx.moveTo(docX + docWidth - cornerSize, docY);
+      ctx.lineTo(docX + docWidth, docY + cornerSize);
+      ctx.lineTo(docX + docWidth - cornerSize, docY + cornerSize);
+      ctx.closePath();
+      ctx.fill();
+
+      // Lines on document
+      ctx.strokeStyle = colors.start;
+      ctx.lineWidth = Math.max(1, size * 0.02);
+      ctx.lineCap = 'round';
+      
+      const lineMargin = docWidth * 0.2;
+      const lineSpacing = docHeight * 0.15;
+      const startY = docY + docHeight * 0.3;
+      
+      for (let i = 0; i < 3; i++) {
+        const y = startY + i * lineSpacing;
+        const lineWidth = i === 2 ? docWidth * 0.5 : docWidth * 0.6;
+        ctx.beginPath();
+        ctx.moveTo(docX + lineMargin, y);
+        ctx.lineTo(docX + lineMargin + lineWidth, y);
+        ctx.stroke();
+      }
+
+      return canvas;
+    }
+
+    function showPreview() {
+      const preview = document.getElementById('preview');
+      preview.innerHTML = '<p><strong>Preview:</strong></p>';
+      
+      sizes.forEach(size => {
+        const canvas = createIcon(size);
+        canvas.style.width = size > 48 ? '128px' : `${size * 2}px`;
+        canvas.style.height = size > 48 ? '128px' : `${size * 2}px`;
+        canvas.title = `${size}x${size}`;
+        preview.appendChild(canvas);
+      });
+    }
+
+    function generateIcons() {
+      const status = document.getElementById('status');
+      
+      sizes.forEach(size => {
+        const canvas = createIcon(size);
+        
+        canvas.toBlob(blob => {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `icon${size}.png`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 'image/png');
+      });
+      
+      status.classList.add('show');
+      setTimeout(() => {
+        status.classList.remove('show');
+      }, 5000);
+    }
+
+    // Show preview on load
+    showPreview();
+  </script>
+</body>
+</html>
